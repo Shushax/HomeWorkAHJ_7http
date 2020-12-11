@@ -14,10 +14,18 @@ app.use(koaBody({
 }))
 
 app.use(async ctx => {
-    ctx.response.set({
-        'Access-Control-Allow-Origin': '*',
-    })
-    const { method } = ctx.request.querystring;
+
+    const origin = ctx.request.get('Origin');
+    if (!origin) {
+        return await next();
+    }
+
+    const headers = { 'Access-Control-Allow-Origin': '*', };
+
+    if (ctx.request.method !=='OPTIONS') {
+        ctx.response.set({ ...headers} );
+        try {
+            const { method } = ctx.request.querystring;
 
     switch (method) {
         case 'allTickets':
@@ -35,7 +43,20 @@ app.use(async ctx => {
             ctx.response.status = 404;
             return;
     }
-});
+        } catch (e) {
+            e.headers = {...e.headers, ...headers };
+            throw e; 
+        }
+    }
 
-const server = http.createServer(app.callback()).listen(8080);
+    if (ctx.request.get('Access-Control-Request-Method')) {
+        ctx.response.set({ ...headers, 'Access-Control-Allow-Methods': 'GET, POST' });
+        if (ctx.request.get('Access-Control-Request-Headers')) {
+            ctx.response.set('Access-Control-Allow-Headers', ctx.request.get('Access-Control-Request-Headers'));
+        }
+    }
+
+});
+const port = process.env.PORT||7070;
+const server = http.createServer(app.callback()).listen(port);
 
