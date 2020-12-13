@@ -1,13 +1,12 @@
-const form = document.forms[0];
-form.onsubmit = function(e) {
-    e.preventDefault();
-    let xhr = new XMLHttpRequest();
-    let formData = new FormData(form);
-    xhr.open('POST', 'http://localhost:8080/?method=createTicket');
-    xhr.send(formData);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            console.log('Работает!');
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://localhost:7070/?method=allTickets');
+xhr.send();
+xhr.addEventListener('load', () => {
+    if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+            console.log(xhr.responseText);
+        } catch (e) {
+            console.error(e);
         }
     }
-}
+});
