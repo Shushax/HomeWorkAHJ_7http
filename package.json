@@ -8,6 +8,7 @@
     "build": "webpack --mode production",
     "startforever": "forever src/js/server.js",
     "watch": "forever -w src/js/server.js",
+    "stop": "forever stopall",
     "lint": "eslint .",
     "test": "jest --passWithNoTests",
     "coverage": "jest --coverage",

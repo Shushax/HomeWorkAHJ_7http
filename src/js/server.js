@@ -16,7 +16,7 @@ const tickets = [
 app.use(koaBody({
     urlencoded: true,
     multipart: true,
-}))
+}));
 
 
 app.use(async (ctx, next) => {
@@ -47,7 +47,8 @@ app.use(async (ctx, next) => {
   });
 
   app.use(async ctx => {
-    const { method } = ctx.request.querystring;
+    const { method } = ctx.request.query["method"];
+    console.log(method);
 
     switch (method) {
         case 'allTickets':
@@ -63,15 +64,16 @@ app.use(async (ctx, next) => {
             console.log(ctx.request.query);
             ctx.response.status = 200;
         default:
-            ctx.response.status = 404;
+            ctx.response.status = 200;
             return;
     }
 });
 
-
-
-
-
-const port = 7070;
+const port = process.env.PORT || 8080;
 const server = http.createServer(app.callback()).listen(port);
+
+
+
+
+
 
