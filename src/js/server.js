@@ -2,14 +2,16 @@ const http = require('http');
 const koaBody = require('koa-body');
 const Koa = require('koa');
 const app = new Koa();
+const uuid = require('uuid');
+const moment = require('moment');
 
 const tickets = [
     {
-        id: 1,
+        id: 15678,
         name: 'Vova',
         description: 'This is Vova',
         status: true,
-        created: '2012.12.13'
+        created: moment().format('MMMM Do YYYY, h:mm:ss a')
     }
 ];
 
@@ -47,7 +49,7 @@ app.use(async (ctx, next) => {
   });
 
   app.use(async ctx => {
-    const { method } = ctx.request.query["method"];
+    const method = ctx.request.query["method"];
     console.log(method);
 
     switch (method) {
@@ -56,13 +58,20 @@ app.use(async (ctx, next) => {
             ctx.response.status = 200;
             return;
         case `ticketById`:
-            const { id } = ctx.request.query;
+            const id = ctx.request.query["id"];
             ctx.response.body = tickets.find(ticket => ticket.id === id);
             return;
         case 'createTicket':
             ctx.response.body = 'Тикет создан';
-            console.log(ctx.request.query);
+            tickets.push({
+              id: uuid.v4(),
+              name: ctx.request.body.name,
+              description: ctx.request.body.description,
+              status: false,
+              created: moment().format('MMMM Do YYYY, h:mm:ss a')
+            })
             ctx.response.status = 200;
+            return;
         default:
             ctx.response.status = 200;
             return;

@@ -7,5 +7,28 @@
     <title>Document</title>
 </head>
 <body>
+    <button class="new_ticket">Добавить тикет</button>
+    <ul class="tickets">
+    </ul>
+    <form class="modal_new_ticket hidden">Добавить тикет
+        <label for="name">Краткое описание</label>
+        <input name="name" id="name" type="text">
+        <label for="description">Подробное описание</label>
+        <input name="description" id="description" type="text">
+        <button id="cancel_new_ticket">Отмена</button>
+        <button id="accept_new_ticket">Ок</button>
+    </form>
+    <form class="change_ticket hidden">Изменить тикет
+        <label for="change_name">Краткое описание</label>
+        <input name="name" id="change_name" type="text">
+        <label for="change_description">Подробное описание</label>
+        <input name="description" id="change_description" type="text">
+        <button id="cancel_change_ticket">Отмена</button>
+        <button id="accept_change_ticket">Ок</button>
+    </form>
+    <form class="delete_ticket hidden">Удалить тикет
+        <button id="cancel_delete_ticket">Отмена</button>
+        <button id="accept_delete_ticket">Ок</button>
+    </form>
 </body>
 </html>
