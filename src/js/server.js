@@ -3,8 +3,6 @@
 /* eslint no-case-declarations:0 */ // --> OFF
 /* eslint no-unused-vars:0 */ // --> OFF
 
-const
-
 const http = require('http');
 const koaBody = require('koa-body');
 const Koa = require('koa');
