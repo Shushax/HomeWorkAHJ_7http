@@ -35,7 +35,7 @@ cancelNewTicket.onclick = function (e) {
 acceptNewTicket.onclick = function (e) {
   e.preventDefault();
   const xhrNewTicket = new XMLHttpRequest();
-  xhrNewTicket.open('POST', 'http://localhost:8080/?method=createTicket');
+  xhrNewTicket.open('POST', 'https://homework7http.herokuapp.com/?method=createTicket');
   const formData = new FormData(formNewTicket);
   xhrNewTicket.send(formData);
   formNewTicket.reset();
@@ -44,7 +44,7 @@ acceptNewTicket.onclick = function (e) {
 };
 
 const xhr = new XMLHttpRequest();
-xhr.open('GET', 'http://localhost:8080/?method=allTickets');
+xhr.open('GET', 'https://homework7http.herokuapp.com/?method=allTickets');
 xhr.send();
 xhr.addEventListener('load', () => {
   if (xhr.status >= 200 && xhr.status < 300) {
@@ -95,7 +95,7 @@ xhr.addEventListener('load', () => {
       ticket.addEventListener('click', () => {
         const ticketID = ticket.querySelector('.id');
         const xhrDescription = new XMLHttpRequest();
-        xhrDescription.open('GET', `http://localhost:8080/?method=ticketById&id=${ticketID.textContent}`);
+        xhrDescription.open('GET', `https://homework7http.herokuapp.com/?method=ticketById&id=${ticketID.textContent}`);
         xhrDescription.send();
         xhrDescription.addEventListener('load', () => {
           if (xhrDescription.status >= 200 && xhrDescription.status < 300) {
