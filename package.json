@@ -4,7 +4,7 @@
   "main": "js/app.js",
   "repository": "https://github.com/Shushax/HomeWorkAHJ2.1.git",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
+    "start": "node src/js/server.js",
     "build": "webpack --mode production",
     "startforever": "forever src/js/server.js",
     "watch": "forever -w src/js/server.js",

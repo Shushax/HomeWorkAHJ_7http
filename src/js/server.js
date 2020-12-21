@@ -49,34 +49,40 @@ app.use(async (ctx, next) => {
   });
 
   app.use(async ctx => {
-    const method = ctx.request.query["method"];
-    console.log(method);
+    const { method } = ctx.request;
 
     switch (method) {
-        case 'allTickets':
+      case 'GET':
+        const methodParam = ctx.request.query["method"];
+          if (methodParam == 'allTickets') {
             ctx.response.body = tickets;
             ctx.response.status = 200;
             return;
-        case `ticketById`:
+          } else if (methodParam == 'ticketById') {
             const id = ctx.request.query["id"];
             ctx.response.body = tickets.find(ticket => ticket.id === id);
             return;
-        case 'createTicket':
-            ctx.response.body = 'Тикет создан';
-            tickets.push({
-              id: uuid.v4(),
-              name: ctx.request.body.name,
-              description: ctx.request.body.description,
-              status: false,
-              created: moment().format('MMMM Do YYYY, h:mm:ss a')
-            })
-            ctx.response.status = 200;
-            return;
-        default:
-            ctx.response.status = 200;
-            return;
-    }
+          }
+        return;
+      case 'POST':
+        const postParams = ctx.request.body;
+        ctx.response.body = 'Тикет создан';
+        tickets.push({
+          id: uuid.v4(),
+          name: postParams.name,
+          description: postParams.description,
+          status: false,
+          created: moment().format('MMMM Do YYYY, h:mm:ss a')
+        })
+        ctx.response.status = 200;
+        return;
+      default:
+          ctx.response.status = 200;
+          return;
+  }
 });
+
+    
 
 const port = process.env.PORT || 8080;
 const server = http.createServer(app.callback()).listen(port);
